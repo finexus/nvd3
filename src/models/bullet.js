@@ -26,7 +26,7 @@ nv.models.bullet = function() {
         , height = 30
         , container = null
         , tickFormat = null
-        , color = nv.utils.getColor(['#1f77b4'])
+        , color = function(d) { return d.measureColor ? nv.utils.getColor(d.measureColor) : nv.utils.getColor(['#1f77b4'])  }
         , dispatch = d3.dispatch('elementMouseover', 'elementMouseout', 'elementMousemove')
         , defaultRangeLabels = ["Maximum", "Mean", "Minimum"]
         , legacyRangeClassNames = ["Max", "Avg", "Min"]
@@ -153,7 +153,7 @@ nv.models.bullet = function() {
                 .attr('width', measurez < 0 ?
                     x1(0) - x1(measurez[0])
                     : x1(measurez[0]) - x1(0))
-                .attr('x', xp1(measurez));
+                .attr('x', x1(measurez[measurez.length - 1]));    // sorted descending, take the last one which should be the minimum value
 
             var h3 =  availableHeight / 6;
 

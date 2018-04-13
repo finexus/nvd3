@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2016-12-08 */
+/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-13 */
 (function(){
 
 // set up main nv object
@@ -2564,7 +2564,7 @@ nv.models.bullet = function() {
         , height = 30
         , container = null
         , tickFormat = null
-        , color = nv.utils.getColor(['#1f77b4'])
+        , color = function(d) { return d.measureColor ? nv.utils.getColor(d.measureColor) : nv.utils.getColor(['#1f77b4'])  }
         , dispatch = d3.dispatch('elementMouseover', 'elementMouseout', 'elementMousemove')
         , defaultRangeLabels = ["Maximum", "Mean", "Minimum"]
         , legacyRangeClassNames = ["Max", "Avg", "Min"]
@@ -2691,7 +2691,7 @@ nv.models.bullet = function() {
                 .attr('width', measurez < 0 ?
                     x1(0) - x1(measurez[0])
                     : x1(measurez[0]) - x1(0))
-                .attr('x', xp1(measurez));
+                .attr('x', x1(measurez[measurez.length - 1]));    // sorted descending, take the last one which should be the minimum value
 
             var h3 =  availableHeight / 6;
 
@@ -6886,8 +6886,10 @@ nv.models.lineChart = function() {
                     .call(legend);
 
                 if (legendPosition === 'bottom') {
-                    wrap.select('.nv-legendWrap')
-                        .attr('transform', 'translate(0,' + availableHeight +')');
+                     margin.bottom = xAxis.height() + legend.height();
+                     availableHeight = nv.utils.availableHeight(height, container, margin);
+                     g.select('.nv-legendWrap')
+                         .attr('transform', 'translate(0,' + (availableHeight + xAxis.height())  +')');
                 } else if (legendPosition === 'top') {
                     if (!marginTop && legend.height() !== margin.top) {
                         margin.top = legend.height();
