@@ -12,17 +12,17 @@
         }
 
         .nv-rangeMin {
-            fill: #b82c0c !important;
+            fill: rgb(220, 196, 243) !important;
             fill-opacity: 1.0 !important;
         }
 
         .nv-rangeAvg {
-            fill: yellow !important;
+            fill: rgb(135, 169, 241) !important;
             fill-opacity: 1.0 !important;
         }
 
         .nv-rangeMax {
-            fill:#008000 !important;
+            fill:rgb(20, 94, 139) !important;
             fill-opacity: 1.0 !important;
         }
 
@@ -33,7 +33,8 @@
 </head>
 <body>
 
-Bullet Chart w/ Custom Measure (scale and colors) and Range Colors
+<h3>Testing Bullet Chart</h3>
+<br/><br/>
 <div class="gallery with-transitions" id="chart">
     <svg></svg>
 </div>
@@ -41,15 +42,14 @@ Bullet Chart w/ Custom Measure (scale and colors) and Range Colors
 <script>
 
     var data = {
-        "title": "BTC/USD",
-        // "subtitle": "USD$, in thousands",
-        "ranges": [6695.06,9196.64,19535.7],
-        "measures": [1000,9196.64],
-        "measureLabels": ["4w Range"],
-        "markerLineLabels": ["Previous Price"],  
+        "title": "BTC/USD",         
+        "ranges": [0,1167.97,6558.97,19535.7],
+        "measures": [6695,2501],
+        "measureLabels": ["1 Month"],
+        "markerLineLabels": ["1 Month Avg"],  
         "markers": [8092.44],       // current price
         "markerLabels": ["Current Price"],
-        "markerLines": [1167.97],    // previous price
+        "markerLines": [7746.99],    // previous price
         "measureColor": "darkorange"
     }
 
