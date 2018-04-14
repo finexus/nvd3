@@ -2690,7 +2690,7 @@ nv.models.bullet = function() {
                 .duration(duration)
                 .attr('width', measurez < 0 ?
                     x1(0) - x1(measurez[0])
-                    : x1(measurez[0]) - x1(0))
+                    : x1(measurez[0]) - x1(measurez[measurez.length - 1]))
                 .attr('x', x1(measurez[measurez.length - 1]));    // sorted descending, take the last one which should be the minimum value
 
             var h3 =  availableHeight / 6;
