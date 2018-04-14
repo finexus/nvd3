@@ -7,49 +7,100 @@
     <script src="../build/nv.d3.js"></script>
 
     <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.9em;
+        }
         #chart svg {
             height: 80px;
         }
 
-        .nv-rangeMin {
-            fill: rgb(220, 196, 243) !important;
+        .nv-range0 {
+            fill: silver !important;
             fill-opacity: 1.0 !important;
         }
 
-        .nv-rangeAvg {
-            fill: rgb(135, 169, 241) !important;
+        .nv-range1 {
+            fill: rgb(172, 233, 169) !important;
+            fill-opacity: 1.0 !important;
+            border-right-color: rgb(87, 196, 81);
+            border-right-width: 1px;
+        }
+
+        .nv-range2 {
+            fill:blueviolet !important;
             fill-opacity: 1.0 !important;
         }
 
-        .nv-rangeMax {
-            fill:rgb(20, 94, 139) !important;
+        .nv-range3 {
+            fill: rgb(233, 175, 175) !important;
+            fill-opacity: 1.0 !important;
+            border-left-color: rgb(248, 30, 30) !important;
+            border-left-width: 1px;
+        }
+
+        .nv-range4 {
+            fill: silver !important;
             fill-opacity: 1.0 !important;
         }
+
+        /* .nv-range5 {
+            fill: blueviolet !important;
+            fill-opacity: 1.0 !important;
+        } */
 
         .nv-title {
             font-size: 14px !important;
         }
+
+        .desc {
+            padding-left: 15px;            
+        }
+
     </style>
 </head>
 <body>
 
-<h3>Testing Bullet Chart</h3>
-<br/><br/>
+<h3>Testing CryptoKuma Bullet Chart Snapshot</h3>
+<br/>
 <div class="gallery with-transitions" id="chart">
     <svg></svg>
 </div>
+<br/>
 
+<ul style="font-size: 0.9em;font-style:italic;">
+    <li>Inverted Triangle shows the current Price</li>
+    <li><strong>30-Day Prices</strong></li>
+        <ul>
+            <li>Vertical Black line is 30d Avg Price</li>
+            <li>Orange bar indicates the 30d Price range</li>
+        </ul>
+    <li><strong>12-Month Prices</strong></li>
+        <ul>
+            <li>Light red range from 12m low to 12m avg</li>
+            <li>Vertical Purple line is 12m Avg</li>
+            <li>Light green range from 12m avg to 12m high</li>        
+        </ul>
+    <li>Right Axis is ATH</li>
+</ul>
 <script>
 
     var data = {
         "title": "BTC/USD",         
-        "ranges": [0,1167.97,6558.97,19535.7],
-        "measures": [6695,2501],
-        "measureLabels": ["1 Month"],
-        "markerLineLabels": ["1 Month Avg"],  
-        "markers": [8092.44],       // current price
+        "ranges": [
+            0,       // Always 0
+            1173.51, // 12m Low
+            6581.47, // 12m Avg
+            6681.47, // +100 px ??
+            19000, // 12m High
+            19535.7  // ATH
+        ],
+        "measures": [6695.06,9107.93],  // 30d Range
+        "measureLabels": ["Past 30d"],
+        "markerLineLabels": ["30d Avg"],  
+        "markers": [8032.66],       // current price
         "markerLabels": ["Current Price"],
-        "markerLines": [7746.99],    // previous price
+        "markerLines": [7710.91],    // previous price
         "measureColor": "darkorange"
     }
 
