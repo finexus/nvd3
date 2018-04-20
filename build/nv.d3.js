@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-13 */
+/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-20 */
 (function(){
 
 // set up main nv object
@@ -2548,7 +2548,7 @@ nv.models.bullet = function() {
     // Public Variables with Default Settings
     //------------------------------------------------------------
 
-    var margin = {top: 0, right: 0, bottom: 0, left: 0}
+    var margin = function(d) { return {top: 0, right: 0, bottom: 0, left: 0} }
         , orient = 'left' // TODO top & bottom
         , reverse = false
         , ranges = function(d) { return d.ranges }
@@ -2582,8 +2582,10 @@ nv.models.bullet = function() {
 
     function chart(selection) {
         selection.each(function(d, i) {
-            var availableWidth = width - margin.left - margin.right,
-                availableHeight = height - margin.top - margin.bottom;
+            var marginz = margin.call(this, d, i); 
+ 
+            var availableWidth = width - marginz.left - marginz.right, 
+                availableHeight = height - marginz.top - marginz.bottom;
 
             container = d3.select(this);
             nv.utils.initSVG(container);
@@ -2643,7 +2645,7 @@ nv.models.bullet = function() {
 
             gEnter.append('rect').attr('class', 'nv-measure');
 
-            wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+            wrap.attr('transform', 'translate(' + marginz.left + ',' + marginz.top + ')');
 
             var w0 = function(d) { return Math.abs(x0(d) - x0(0)) }, // TODO: could optimize by precalculating x0(0) and x1(0)
                 w1 = function(d) { return Math.abs(x1(d) - x1(0)) };
@@ -2864,12 +2866,12 @@ nv.models.bulletChart = function() {
 
     var orient = 'left' // TODO top & bottom
         , reverse = false
-        , margin = {top: 5, right: 40, bottom: 20, left: 120}
+        , margin = function(d) { return d.margin ? d.margin : {top: 5, right: 40, bottom: 20, left: 120} }
         , ranges = function(d) { return d.ranges }
         , markers = function(d) { return d.markers ? d.markers : [] }
         , measures = function(d) { return d.measures }
         , width = null
-        , height = 55
+        , height = function(d) { return d.height ? d.height : 55 }
         , tickFormat = null
         , ticks = null
         , noData = null
@@ -2885,8 +2887,11 @@ nv.models.bulletChart = function() {
             var container = d3.select(this);
             nv.utils.initSVG(container);
 
-            var availableWidth = nv.utils.availableWidth(width, container, margin),
-                availableHeight = height - margin.top - margin.bottom,
+            var marginz = margin.call(this, d, i); 
+            var heightz = height.call(this, d, i); 
+
+            var availableWidth = nv.utils.availableWidth(width, container, marginz), 
+                availableHeight = heightz, 
                 that = this;
 
             chart.update = function() { chart(selection) };
@@ -2913,7 +2918,7 @@ nv.models.bulletChart = function() {
             gEnter.append('g').attr('class', 'nv-bulletWrap');
             gEnter.append('g').attr('class', 'nv-titles');
 
-            wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+            wrap.attr('transform', 'translate(' + marginz.left + ',' + marginz.top + ')');
 
             // Compute the new x-scale.
             var x1 = d3.scale.linear()
@@ -2925,6 +2930,11 @@ nv.models.bulletChart = function() {
                 .domain([0, Infinity])
                 .range(x1.range());
 
+            // Custom tick x-scale that accounts for custom margin 
+            var tickX = d3.scale.linear()
+                .domain([0, Math.max(rangez[0], (markerz[0] || 0), measurez[0])])
+                .range(reverse ? [availableWidth, marginz.right] : [marginz.left, availableWidth]);
+
             // Stash the new scale.
             this.__chart__ = x1;
 
@@ -2933,7 +2943,7 @@ nv.models.bulletChart = function() {
 
             var title = gEnter.select('.nv-titles').append('g')
                 .attr('text-anchor', 'end')
-                .attr('transform', 'translate(-6,' + (height - margin.top - margin.bottom) / 2 + ')');
+                .attr('transform', 'translate(-6,' + (heightz - marginz.top - marginz.bottom) / 2 + ')');
             title.append('text')
                 .attr('class', 'nv-title')
                 .text(function(d) { return d.title; });
@@ -2976,6 +2986,7 @@ nv.models.bulletChart = function() {
                 .text(format);
 
             // Transition the updating ticks to the new scale, x1.
+            var tickY = availableHeight + 5;
             var tickUpdate = d3.transition(tick)
                 .transition()
                 .duration(bullet.duration())
@@ -2984,10 +2995,10 @@ nv.models.bulletChart = function() {
 
             tickUpdate.select('line')
                 .attr('y1', availableHeight)
-                .attr('y2', availableHeight * 7 / 6);
+                .attr('y2', tickY);
 
             tickUpdate.select('text')
-                .attr('y', availableHeight * 7 / 6);
+                .attr('y', tickY);
 
             // Transition the exiting ticks to the new scale, x1.
             d3.transition(tick.exit())

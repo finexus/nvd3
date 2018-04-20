@@ -10,7 +10,7 @@ nv.models.bullet = function() {
     // Public Variables with Default Settings
     //------------------------------------------------------------
 
-    var margin = {top: 0, right: 0, bottom: 0, left: 0}
+    var margin = function(d) { return {top: 0, right: 0, bottom: 0, left: 0} }
         , orient = 'left' // TODO top & bottom
         , reverse = false
         , ranges = function(d) { return d.ranges }
@@ -44,8 +44,10 @@ nv.models.bullet = function() {
 
     function chart(selection) {
         selection.each(function(d, i) {
-            var availableWidth = width - margin.left - margin.right,
-                availableHeight = height - margin.top - margin.bottom;
+            var marginz = margin.call(this, d, i); 
+ 
+            var availableWidth = width - marginz.left - marginz.right, 
+                availableHeight = height - marginz.top - marginz.bottom;
 
             container = d3.select(this);
             nv.utils.initSVG(container);
@@ -105,7 +107,7 @@ nv.models.bullet = function() {
 
             gEnter.append('rect').attr('class', 'nv-measure');
 
-            wrap.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+            wrap.attr('transform', 'translate(' + marginz.left + ',' + marginz.top + ')');
 
             var w0 = function(d) { return Math.abs(x0(d) - x0(0)) }, // TODO: could optimize by precalculating x0(0) and x1(0)
                 w1 = function(d) { return Math.abs(x1(d) - x1(0)) };
