@@ -96,6 +96,7 @@ nv.models.bulletChart = function() {
                 .attr('transform', 'translate(-6,' + (heightz - marginz.top - marginz.bottom) / 2 + ')');
             title.append('text')
                 .attr('class', 'nv-title')
+                .attr('y', (heightz - marginz.top)/2)
                 .text(function(d) { return d.title; });
 
             title.append('text')
