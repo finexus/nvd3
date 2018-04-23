@@ -2746,7 +2746,7 @@ nv.models.bullet = function() {
               .enter()
               .append('line')
               .attr('cursor', '')
-              .attr('class', 'nv-markerLine')
+              .attr('class', function(d, idx) { return 'nv-markerLine nv-marker' + idx; })
               .attr('x1', function(d) { return x1(d.value) })
               .attr('y1', '2')
               .attr('x2', function(d) { return x1(d.value) })
@@ -2948,6 +2948,7 @@ nv.models.bulletChart = function() {
                 .attr('transform', 'translate(-6,' + (heightz - marginz.top - marginz.bottom) / 2 + ')');
             title.append('text')
                 .attr('class', 'nv-title')
+                .attr('y', (heightz - marginz.top)/2)
                 .text(function(d) { return d.title; });
 
             title.append('text')
