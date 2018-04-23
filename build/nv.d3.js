@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-20 */
+/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-23 */
 (function(){
 
 // set up main nv object
@@ -2894,7 +2894,9 @@ nv.models.bulletChart = function() {
                 availableHeight = heightz, 
                 that = this;
 
-            chart.update = function() { chart(selection) };
+            chart.update = function() { 
+                container.call(chart) 
+            };
             chart.container = this;
 
             // Display No Data message if there's nothing to show.
