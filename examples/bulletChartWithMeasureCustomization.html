@@ -85,25 +85,45 @@
 </ul>
 <script>
 
+    // var data = {
+    //     "title": "BTC/USD",         
+    //     "ranges": [
+    //         0,       // Always 0
+    //         1173.51, // 12m Low
+    //         6581.47, // 12m Avg
+    //         6681.47, // +100 px ??
+    //         19000, // 12m High
+    //         19535.7  // ATH
+    //     ],
+    //     "measures": [6695.06,9107.93],  // 30d Range
+    //     "measureLabels": ["Past 30d"],
+    //     "markerLineLabels": ["30d Avg"],  
+    //     "markers": [8032.66],       // current price
+    //     "markerLabels": ["Current Price"],
+    //     "markerLines": [7710.91],    // previous price
+    //     "measureColor": "darkorange"
+    // }
+
     var data = {
-        "title": "BTC/USD",         
+        "title": "XVG/USD",         
         "ranges": [
             0,       // Always 0
-            1173.51, // 12m Low
-            6581.47, // 12m Avg
-            6681.47, // +100 px ??
-            19000, // 12m High
-            19535.7  // ATH
+            0.0000721565, // 12m Low
+            0.0318894, // 12m Avg
+            0.033, // +100 px ??
+            0.231503, // 12m High
+            0.231503  // ATH
         ],
-        "measures": [6695.06,9107.93],  // 30d Range
+        "measures": [0.029833,0.1184],  // 30d Range
         "measureLabels": ["Past 30d"],
         "markerLineLabels": ["30d Avg"],  
-        "markers": [8032.66],       // current price
+        "markers": [0.07789],       // current price
         "markerLabels": ["Current Price"],
-        "markerLines": [7746.99],    // previous price
-        "measureColor": "darkorange",
         "height": 30
+        "markerLines": [0.06244435],    //  30d Avg
+        "measureColor": "darkorange"
     }
+
 
     nv.addGraph(function() {
         var chart = nv.models.bulletChart();
