@@ -1,4 +1,4 @@
-/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-04-23 */
+/* nvd3 version 1.8.5-dev (https://github.com/novus/nvd3) 2018-05-31 */
 (function(){
 
 // set up main nv object
@@ -2571,6 +2571,10 @@ nv.models.bullet = function() {
         , duration = 1000
         ;
 
+    function formatValues(value) {
+        return '$' + parseFloat(Math.round(value * 100) / 100).toFixed(2);
+    }
+
     function sortLabels(labels, values){
         var lz = labels.slice();
         labels.sort(function(a, b){
@@ -2669,21 +2673,21 @@ nv.models.bullet = function() {
                 .attr('y', availableHeight / 3)
                 .on('mouseover', function() {
                     dispatch.elementMouseover({
-                        value: measurez[0],
+                        value: formatValues(measurez[0]),
                         label: measureLabelz[0] || 'Current',
                         color: d3.select(this).style("fill")
                     })
                 })
                 .on('mousemove', function() {
                     dispatch.elementMousemove({
-                        value: measurez[0],
+                        value: formatValues(measurez[0]),
                         label: measureLabelz[0] || 'Current',
                         color: d3.select(this).style("fill")
                     })
                 })
                 .on('mouseout', function() {
                     dispatch.elementMouseout({
-                        value: measurez[0],
+                        value: formatValues(measurez[0]),
                         label: measureLabelz[0] || 'Current',
                         color: d3.select(this).style("fill")
                     })
@@ -2709,7 +2713,7 @@ nv.models.bullet = function() {
               .attr('d', 'M0,' + h3 + 'L' + h3 + ',' + (-h3) + ' ' + (-h3) + ',' + (-h3) + 'Z')
               .on('mouseover', function(d) {
                 dispatch.elementMouseover({
-                  value: d.value,
+                  value: formatValues(d.value),
                   label: d.label || 'Previous',
                   color: d3.select(this).style("fill"),
                   pos: [x1(d.value), availableHeight/2]
@@ -2718,14 +2722,14 @@ nv.models.bullet = function() {
               })
               .on('mousemove', function(d) {
                   dispatch.elementMousemove({
-                      value: d.value,
+                      value: formatValues(d.value),
                       label: d.label || 'Previous',
                       color: d3.select(this).style("fill")
                   })
               })
               .on('mouseout', function(d, i) {
                   dispatch.elementMouseout({
-                      value: d.value,
+                      value: formatValues(d.value),
                       label: d.label || 'Previous',
                       color: d3.select(this).style("fill")
                   })
@@ -2753,7 +2757,7 @@ nv.models.bullet = function() {
               .attr('y2', availableHeight - 2)
               .on('mouseover', function(d) {
                 dispatch.elementMouseover({
-                  value: d.value,
+                  value: formatValues(d.value),
                   label: d.label || 'Previous',
                   color: d3.select(this).style("fill"),
                   pos: [x1(d.value), availableHeight/2]
@@ -2762,14 +2766,14 @@ nv.models.bullet = function() {
               })
               .on('mousemove', function(d) {
                   dispatch.elementMousemove({
-                      value: d.value,
+                      value: formatValues(d.value),
                       label: d.label || 'Previous',
                       color: d3.select(this).style("fill")
                   })
               })
               .on('mouseout', function(d, i) {
                   dispatch.elementMouseout({
-                      value: d.value,
+                      value: formatValues(d.value),
                       label: d.label || 'Previous',
                       color: d3.select(this).style("fill")
                   })
@@ -2786,14 +2790,14 @@ nv.models.bullet = function() {
                 .on('mouseover', function(d,i) {
                     var label = rangeLabelz[i] || defaultRangeLabels[i];
                     dispatch.elementMouseover({
-                        value: d,
+                        value: formatValues(d),
                         label: label,
                         color: d3.select(this).style("fill")
                     })
                 })
                 .on('mousemove', function() {
                     dispatch.elementMousemove({
-                        value: measurez[0],
+                        value: formatValues(measurez[0]),
                         label: measureLabelz[0] || 'Previous',
                         color: d3.select(this).style("fill")
                     })
@@ -2801,7 +2805,7 @@ nv.models.bullet = function() {
                 .on('mouseout', function(d,i) {
                     var label = rangeLabelz[i] || defaultRangeLabels[i];
                     dispatch.elementMouseout({
-                        value: d,
+                        value: formatValues(d),
                         label: label,
                         color: d3.select(this).style("fill")
                     })
